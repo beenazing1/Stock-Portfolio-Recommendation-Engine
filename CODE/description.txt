@@ -1,0 +1,150 @@
+BACKEND FILES NEEDED FOR DEMO (need not be run by user - just added here for evaluation purposes)
+
+Quality Score:
+
+		To generate the quality score, the fundamental and the security price files (funda_1000_edited.csv and dsf_1000_edited.csv) should be present in the same folder in which the quality_score.py and data_merge.py file is present. You need to run the data_merge.py file to prepare the merged data set to be used by quality_score.py. Refer to the comments on the python file for the methodology for generating the quality score. The crsp (dsf)  and compustat (funda) files have been downloaded the wrds website. The output of the program is a csv file “dsf_funda_quality_score_clean”
+
+		Requires: Pandas, numpy
+		Directory Structure:
+
+		|--quality_score/
+			|-- quality_score.py
+			|-- data_merge.py
+			|-- data.7zip (unzip the data file before running the code)
+
+
+Short Term Stock Prediction: 
+
+	Contains 2 Python Codes - preprocessing.py and StockPricePrediction_ShortTerm.py.
+	To generate the results of the 5 days prediction, the price data (open, High, low, close)  for around ~900 stocks is required (data folder) and the cusip_tickr_mapping file (this file is nothing but a mapping of the shortlisted stocks in dsf_funda_quality_score_clean with the name of the stocks) is required to subset the 1000 stocks based on the highest quality scores calculated above.
+	The StockPricePrediction.py file should be run to generate the output of the program which is the results.csv file which contains the name of the stock and the predicted stock prices for the next 5 days.
+
+	Requires: Python 3.6 (Pandas, matplotlib, sklearn, Numpy, Keras (Tensorflow backend) , os, csv)
+
+	Directory Structure:
+
+	|-- Short Term Stock Prices Prediction/
+		|-- preprocessing.py
+		|-- StockPricePrediction_Short Term.py
+				  |-- cusip_ticker_mapping.csv
+		|-- result.csv (Final Output File)
+		|-- \data
+			|-- <contains ~900 csv files with ~15 years of past open, high, low, close price data>
+
+
+
+Long Term Model - ARIMAX:
+
+	Files Required: 
+	funda_1000_edited.csv
+	cusip_ticker_mapping.csv
+
+	Once you have these files in the same folder run the R code : LongTermARIMAX.R
+
+	This will give result.csv as the output which has the ticker name along with 6/12 month return and corresponding MAPE
+
+	Requires: aod, zoo, forecast, tseries, vars, dplyr
+
+	Directory Structure:
+
+	|-- Long Term ARIMAX/
+		|-- LongTermARIMAX.R
+		|-- result.csv (Final Output File)
+		|-- funda_1000_edited.csv
+				  |-- cusip_ticker_mapping.csv
+
+
+Long Term Model - Regression:
+
+	Files Required: 
+	funda_1000_edited.csv
+	dsf_funda_quality_score_clean.csv (output of Quality Score)
+	cusip_ticker_mapping.csv
+
+	Once you have these files in the same folder run the R code : Long_Term_Regression_Models.R
+	Outputs: 
+	6 months:
+	6m_training_prediction.csv
+	6m_prediction.csv
+	6m_all_prediction.csv
+	12 months:
+	12m_training_prediction.csv
+	12m_prediction.csv
+	12m_all_prediction.csv
+
+	Requires: R packages such as glmnet, car, lubridate, dplyr 
+
+	Directory Structure:
+
+	|-- Long Term Regression Models/
+		|-- Long_Term_Regression_Models.R
+				  |-- cusip_ticker_mapping.csv
+		|-- funda_1000_edited.csv
+		|--dsf_funda_quality_score_clean.csv
+
+
+
+
+Backtesting:
+	To run the code for backtesting (testing the historical performance of the portfolio), run the scripts backtest1.py (1-year backtest), backtest2.py (1-week backtest), and backtest3.py (6-month backtest). The scripts will plot the portfolio and SPY performance and print out portfolio and SPY statistics. The backtesting scripts utilize the codes:
+
+	optimization.py: Runs optimization and determines optimal portfolio
+	marketsim.py: Calculates value of optimal portfolio for backtesting period and plots it, and calculates portfolio statistics (cumulative return, average daily return, portfolio standard deviation, and sharpe ratio)
+
+	Also utilizes data stored in the /data/ directory - must be run in same directory as /data/
+
+	Requirements: Numpy, Pandas, Matplotlib, gurobipy
+
+	Directory Structure:
+	|--Backtesting/
+	|--optimization.py
+	|--marketsim.py
+	|--backtest1.py
+	|--backtest2.py
+	|--backtest3.py
+	|--data/
+		|--prices_short.csv
+		|--prices_portfoliosim.csv
+		|--predictions/
+			|--short_term.csv
+		|--backtest/
+			|--prices_long_back.csv
+			|--long_term_back.csv
+
+
+
+
+UI:
+
+	To run and demo the UI, simply run the app.py file, then go to the displayed URL. The app.py code utilizes the codes:
+
+	optimization.py: Runs optimization and determines optimal portfolio
+	portfoliosim.py: Calculates projections for portfolio value for the given time period
+
+	Also utilizes data  stored in the /data/ directory.
+	Must be run in the same directory as the /data/, /static/, and /templates/ directories
+
+	Requirements: Numpy, Pandas, datetime, Flask, gurobipy
+
+	Directory structure:
+	|--UI/
+		|--app.py
+		|--optimization.py
+		|--portfoliosim.py
+		|--data/
+			|--prices_long.csv
+			|--prices_short.csv
+			|--predictions/
+				|--long_term.csv
+				|--short_term.csv
+		|--static/
+			|--css/
+				|--start.css
+				|--portfolio.css
+				|--bootstrap.min.css
+			|--js/
+				|--portfolio.js
+				|--d3.v3.min.js
+		|--templates/
+			|--start.html
+			|--portfolio.html

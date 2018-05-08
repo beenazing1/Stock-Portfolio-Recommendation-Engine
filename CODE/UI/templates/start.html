@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Optimal Portfolio Calculator</title>
+
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/start.css" rel="stylesheet">
+
+</head>
+
+<body>
+    
+    <div class="page-header">
+        <h1>Optimal Portfolio Calculator</h1>
+    </div>
+    
+    <div class="container">
+    <form name = "preferencess" class="form-input" role="form" action="" method="POST">
+
+    <!-- Form for entering amount to invest -->
+    <div class="form-group">
+        <label for="capital">Enter investment amount:</label>
+        <input name="capital" type="text" class="form-control form-control-inline">
+    </div>
+
+    <!-- Form for entering desired return -->
+    <div class="form-group">
+        <label for="return">Enter desired return (percentage):</label>
+        <input name="return" type="text" class="form-control form-control-inline">
+    </div>
+
+
+    <!-- Form for choosing time horizon -->
+    <div class="form-group">
+        <label for="time">Time Horizon:</label>
+        <select name="time" class="form-control form-control-inline" id="time">
+            <option value="5.0">1 week</option>
+            <option value="126.0">6 months</option>
+            <option value="252.0">1 year</option>
+        </select>
+        &nbsp;&nbsp;
+        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Calculate"></input>
+    </div>
+    </form>
+    </div>
+
+    <!-- Area for error message (if necessary) -->
+    {% if error %}
+    <p>{{ error }}</p>
+    {% endif %}
+
+</body>
+
+
+</html>

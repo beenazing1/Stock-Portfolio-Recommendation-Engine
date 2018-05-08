@@ -1,0 +1,40 @@
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+
+h1 {
+    text-align:center;
+}
+
+div#piechart {
+    margin:0 auto;
+}
+
+div#preferences {
+    margin:0 auto;
+}
+
+div#stocklist {
+    margin:0 auto;
+    vertical-align: middle;
+}
+
+path2 {
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-family: sans-serif;
+    font-size: 12px;
+}

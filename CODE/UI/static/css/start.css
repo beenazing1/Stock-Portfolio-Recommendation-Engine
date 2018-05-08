@@ -1,0 +1,19 @@
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+
+.form-input {
+    max-width: 400px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align:center;
+}
+
+p {
+    text-align:center;
+}
